@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    index
+{% endblock %}
+
+{% block main %}
+    <table class = table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if n > 0 %}
+            {% for i in range(n) %}
+            {% if portfolio[i]["shares_left"] > 0 %}
+            <tr>
+                <td>{{portfolio[i]["symbol"]}}</td>
+                <td>{{portfolio[i]["name"]}}</td>
+                <td>{{portfolio[i]["shares_left"]}}</td>
+                <td>{{lookup(portfolio[i]["symbol"])["price"] | usd}}</td>
+                <td>{{int(portfolio[i]["shares_left"])*lookup(portfolio[i]["symbol"])["price"] | usd}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            <tr>
+                <td>CASH</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{cash | usd}}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
